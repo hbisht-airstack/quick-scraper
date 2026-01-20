@@ -89,9 +89,9 @@ Optional (backend):
 ```mermaid
 flowchart TD
   A[Frontend: CSV form] -->|POST /api/blinkit/batch-csv| B[Backend: Express]
-  B --> C[Puppeteer opens **inkit]
+  B --> C[Puppeteer opens Blinkit]
   C --> D[Set location by pincode]
-  D --> E[Search term(s)]
+  D --> E[Search terms]
   E --> F[Capture JSON responses]
   F --> G[Filter: ads, quantity, stock, term]
   G --> H[Write CSV to backend/output]
@@ -112,7 +112,7 @@ flowchart LR
 - Frontend: React + Vite + Tailwind
 - Backend: Node.js + Express + Puppeteer
 - CSV generation: local filesystem
-- Data source: **inkit web search responses
+- Data source: Blinkit web search responses
 
 ## API
 
