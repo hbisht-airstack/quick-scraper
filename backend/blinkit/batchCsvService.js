@@ -347,15 +347,16 @@ async function runBlinkitBatchCsv({ pincodes, searchTerms, quantities = [], outp
   let browser;
   try {
     browser = await puppeteer.launch(BROWSER_LAUNCH_OPTS);
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1280, height: 800 });
-    await page.setUserAgent(
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-    );
-
     for (const pincode of pincodes) {
+      const page = await browser.newPage();
+      await page.setViewport({ width: 1280, height: 800 });
+      await page.setUserAgent(
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+      );
+
       const locationTitle = await setBlinkitLocation(page, pincode);
       if (!locationTitle) {
+        await page.close().catch(() => {});
         continue;
       }
 
@@ -413,6 +414,7 @@ async function runBlinkitBatchCsv({ pincodes, searchTerms, quantities = [], outp
           });
         }
       }
+      await page.close().catch(() => {});
     }
   } finally {
     if (browser) {
