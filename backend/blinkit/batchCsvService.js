@@ -11,9 +11,12 @@ const { setBlinkitLocation } = require("./set-location");
 
 const DEFAULT_OUTPUT_DIR = path.join(__dirname, "..", "output");
 
+const isWindows = process.platform === "win32";
 const BROWSER_LAUNCH_OPTS = {
   headless: "new",
-  args: ["--disable-setuid-sandbox", "--no-sandbox", "--single-process", "--no-zygote"],
+  args: isWindows
+    ? ["--no-sandbox", "--disable-setuid-sandbox"]
+    : ["--no-sandbox", "--disable-setuid-sandbox", "--single-process", "--no-zygote"],
   executablePath: process.env.PUPPETEER_EXEC_PATH,
 };
 
